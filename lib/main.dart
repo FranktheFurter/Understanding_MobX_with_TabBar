@@ -13,8 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
       ),
       home: const MyHomePage(),
     );
@@ -31,21 +33,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('TestBox'),
-      ),
-      body: Column(children: [
-        CTabView(initialIndex: 0, tabs: [
-          CTabItem(text: "Tab 1", body: Text("Body 1")),
-          CTabItem(text: "Tab 2", body: Text("Body 2")),
-          CTabItem(text: "Tab 3", body: Text("Body 3")),
-          CTabItem(text: "Tab 4", body: Text("Body 4")),
-          CTabItem(text: "Tab 5", body: Text("Body 5")),
-          CTabItem(text: "Tab 6", body: Text("Body 6")),
-          CTabItem(text: "Tab 7", body: Text("Body 7")),
-          CTabItem(text: "Tab 8", body: Text("Body 8")),
-          CTabItem(text: "Tab 9", body: Text("Body 9")),
-        ]),
+      body: CTabView(initialIndex: 0, tabs: [
+        CTabItem(text: "Tab 1", body: Text("Body 1")),
+        CTabItem(text: "Tab 2", body: Text("Body 2")),
+        CTabItem(text: "Tab 3", body: Text("Body 3")),
+        CTabItem(text: "Tab 4", body: Text("Body 4")),
+        CTabItem(text: "Tab 5", body: Text("Body 5")),
+        CTabItem(text: "Tab 6", body: Text("Body 6")),
+        CTabItem(text: "Tab 7", body: Text("Body 7")),
+        CTabItem(text: "Tab 8", body: Text("Body 8")),
+        CTabItem(text: "Tab 9", body: Text("Body 9")),
       ]),
     );
   }
@@ -95,7 +92,7 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
           child: TabBar(
             controller: _controller,
             isScrollable: true,
-            labelColor: Colors.black,
+            labelColor: Colors.white,
             unselectedLabelColor: Colors.grey,
             tabs: [
               for (var tab in widget.tabs) Tab(text: tab.text),
