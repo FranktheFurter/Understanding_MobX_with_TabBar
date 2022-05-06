@@ -33,17 +33,39 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CTabView(initialIndex: 0, tabs: [
-        CTabItem(text: "Tab 1", body: Text("Body 1")),
-        CTabItem(text: "Tab 2", body: Text("Body 2")),
-        CTabItem(text: "Tab 3", body: Text("Body 3")),
-        CTabItem(text: "Tab 4", body: Text("Body 4")),
-        CTabItem(text: "Tab 5", body: Text("Body 5")),
-        CTabItem(text: "Tab 6", body: Text("Body 6")),
-        CTabItem(text: "Tab 7", body: Text("Body 7")),
-        CTabItem(text: "Tab 8", body: Text("Body 8")),
-        CTabItem(text: "Tab 9", body: Text("Body 9")),
-      ]),
+      body: Column(
+        children: [
+          CTabView(initialIndex: 0, tabs: [
+            CTabItem(text: "Tab 1", body: Text("Body 1")),
+            CTabItem(text: "Tab 2", body: Text("Body 2")),
+            CTabItem(text: "Tab 3", body: Text("Body 3")),
+            CTabItem(text: "Tab 4", body: Text("Body 4")),
+            CTabItem(text: "Tab 5", body: Text("Body 5")),
+            CTabItem(text: "Tab 6", body: Text("Body 6")),
+            CTabItem(text: "Tab 7", body: Text("Body 7")),
+            CTabItem(text: "Tab 8", body: Text("Body 8")),
+            CTabItem(text: "Tab 9", body: Text("Body 9")),
+          ]),
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              OutlinedButton(
+                onPressed: () {},
+                child: Text("<"),
+              ),
+              OutlinedButton(
+                onPressed: () {},
+                child: Text("Hide Tabbar"),
+              ),
+              OutlinedButton(
+                onPressed: () {},
+                child: Text(">"),
+              ),
+            ]),
+          )
+        ],
+      ),
     );
   }
 }
