@@ -32,13 +32,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final cTabViewState = CTabViewState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          CTabView(initialIndex: 0, tabs: [
-            CTabItem(text: "Tab 1", body: Text("Body 1")),
+          CTabView(initialIndex: 0, state: cTabViewState, tabs: [
+            CTabItem(
+                text: "Tab 1",
+                body: Column(
+                  children: [
+                    Text("Body 1"),
+                    ElevatedButton(
+                      onPressed: cTabViewState.nextIndex,
+                      child: Text("Next"),
+                    )
+                  ],
+                )),
             CTabItem(text: "Tab 2", body: Text("Body 2")),
             CTabItem(text: "Tab 3", body: Text("Body 3")),
             CTabItem(text: "Tab 4", body: Text("Body 4")),
@@ -55,24 +66,23 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class CTabView extends StatefulWidget {
-  final CTabViewState state = CTabViewState();
+  final CTabViewState state;
   final int initialIndex;
   List<CTabItem> tabs;
-  CTabView({Key? key, required this.tabs, required this.initialIndex}) : super(key: key);
+  CTabView({Key? key, required this.tabs, required this.initialIndex, required this.state}) : super(key: key);
 
   @override
   State<CTabView> createState() => _CTabViewState();
 }
 
 class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin {
-  late TabController _controller;
-
   @override
   void initState() {
     widget.state.activeIndex = widget.initialIndex;
-    _controller = TabController(
+    widget.state.controller = TabController(
       vsync: this,
       length: widget.tabs.length,
+      initialIndex: widget.state.activeIndex,
     )..addListener(_onTabChange);
     super.initState();
   }
@@ -84,7 +94,7 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
         children: [
           Center(
             child: TabBar(
-              controller: _controller,
+              controller: widget.state.controller,
               isScrollable: true,
               labelColor: Colors.white,
               unselectedLabelColor: Colors.grey,
@@ -98,7 +108,9 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
             children: [
               ElevatedButton(
                   onPressed: () {
-                    widget.state.activeIndex++;
+                    //widget.state.activeIndex++;
+                    //Das muss anderst gehen -> reaction inside state???
+                    //_controller.animateTo(widget.state.activeIndex);
                   },
                   child: Text("Next")),
             ],
@@ -113,7 +125,7 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
   }
 
   void _onTabChange() {
-    widget.state.activeIndex = _controller.index;
+    widget.state.activeIndex = widget.state.controller.index;
   }
 }
 

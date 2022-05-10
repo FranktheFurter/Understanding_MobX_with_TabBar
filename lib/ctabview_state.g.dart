@@ -25,10 +25,44 @@ mixin _$CTabViewState on _CTabViewState, Store {
     });
   }
 
+  late final _$isVisibleAtom =
+      Atom(name: '_CTabViewState.isVisible', context: context);
+
+  @override
+  bool get isVisible {
+    _$isVisibleAtom.reportRead();
+    return super.isVisible;
+  }
+
+  @override
+  set isVisible(bool value) {
+    _$isVisibleAtom.reportWrite(value, super.isVisible, () {
+      super.isVisible = value;
+    });
+  }
+
+  late final _$isEnabledAtom =
+      Atom(name: '_CTabViewState.isEnabled', context: context);
+
+  @override
+  bool get isEnabled {
+    _$isEnabledAtom.reportRead();
+    return super.isEnabled;
+  }
+
+  @override
+  set isEnabled(bool value) {
+    _$isEnabledAtom.reportWrite(value, super.isEnabled, () {
+      super.isEnabled = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-activeIndex: ${activeIndex}
+activeIndex: ${activeIndex},
+isVisible: ${isVisible},
+isEnabled: ${isEnabled}
     ''';
   }
 }
