@@ -67,7 +67,17 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
 
   void _onTabChange() {
     widget.state.tabs?[widget.state.activeIndex].onPopScope?.call();
-    widget.state.activeIndex = widget.state.controller.index;
+
+    bool tabEnabled = widget.state.tabs![widget.state.controller.index].state.isEnabled;
+    bool tabVisible = widget.state.tabs![widget.state.controller.index].state.isVisible;
+
+    if (tabEnabled && tabVisible) {
+      //animate to Tab
+      widget.state.activeIndex = widget.state.controller.index;
+    } else {
+      //restore previous active tab
+      widget.state.controller.index = widget.state.activeIndex;
+    }
   }
 
   _makeTab(int i, CTabItem cTabItem) {

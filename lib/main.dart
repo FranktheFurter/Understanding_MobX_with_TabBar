@@ -103,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 cTabViewState.showItem(3);
               },
-              child: Text("hide 4"),
+              child: Text("show 4"),
             ),
           ]),
         ],
