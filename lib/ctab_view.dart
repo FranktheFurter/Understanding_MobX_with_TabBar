@@ -49,6 +49,7 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
                       isScrollable: true,
                       labelColor: Colors.white,
                       unselectedLabelColor: Colors.grey,
+                      labelPadding: EdgeInsets.all(0),
                       tabs: [
                         //for (var tab in widget.state.tabs ?? []) Tab(text: tab.text),
                         for (int i = 0; i < widget.state.tabs!.length; i++) _makeTab(i, widget.state.tabs![i]),
@@ -82,14 +83,20 @@ class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin
 
   _makeTab(int i, CTabItem cTabItem) {
     if (!widget.state.tabs![i].state.isVisible) {
-      return SizedBox();
+      return Container();
     } else if (!widget.state.tabs![i].state.isEnabled) {
-      return Tab(
-        child: Text(cTabItem.text, style: TextStyle(color: Colors.grey.withOpacity(0.33))),
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Tab(
+          child: Text(cTabItem.text, style: TextStyle(color: Colors.grey.withOpacity(0.33))),
+        ),
       );
     } else {
-      return Tab(
-        text: cTabItem.text,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Tab(
+          text: cTabItem.text,
+        ),
       );
     }
   }
