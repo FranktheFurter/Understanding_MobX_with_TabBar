@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:testzone/ctab_item_state.dart';
 
+import 'ctab_item.dart';
+import 'ctab_view.dart';
 import 'ctabview_state.dart';
 
 void main() {
@@ -39,18 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           CTabView(initialIndex: 0, state: cTabViewState, tabs: [
-            CTabItem(
-                text: "Tab 1",
-                body: Column(
-                  children: [
-                    Text("Body 1"),
-                    ElevatedButton(
-                      onPressed: cTabViewState.nextIndex,
-                      child: Text("Next"),
-                    )
-                  ],
-                )),
-            CTabItem(text: "Tab 2", body: Text("Body 2")),
+            CTabItem(text: "Tab 1", body: Column(children: [Text("Body 1")])),
+            CTabItem(text: "Tab 2", body: Column(children: [Text("Body 2")])),
             CTabItem(text: "Tab 3", body: Text("Body 3")),
             CTabItem(text: "Tab 4", body: Text("Body 4")),
             CTabItem(text: "Tab 5", body: Text("Body 5")),
@@ -58,84 +51,63 @@ class _MyHomePageState extends State<MyHomePage> {
             CTabItem(text: "Tab 7", body: Text("Body 7")),
             CTabItem(text: "Tab 8", body: Text("Body 8")),
             CTabItem(text: "Tab 9", body: Text("Body 9")),
+            //todo
+            CTabItem(text: "Tab hidden", body: Text("Body 10")),
+          ]),
+          Spacer(),
+          ButtonBar(alignment: MainAxisAlignment.center, children: [
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.prevIndex();
+              },
+              child: Text("<="),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.nextIndex();
+              },
+              child: Text("=>"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.setTabIndex(3);
+              },
+              child: Text("goto 4"),
+            ),
+            //todo
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.toggleTabs();
+              },
+              child: Text("toggle"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.disableItem(1);
+              },
+              child: Text("dis 2"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.enableItem(1);
+              },
+              child: Text("en 2"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.hideItem(3);
+              },
+              child: Text("hide 4"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                cTabViewState.showItem(3);
+              },
+              child: Text("hide 4"),
+            ),
           ]),
         ],
       ),
     );
-  }
-}
-
-class CTabView extends StatefulWidget {
-  final CTabViewState state;
-  final int initialIndex;
-  List<CTabItem> tabs;
-  CTabView({Key? key, required this.tabs, required this.initialIndex, required this.state}) : super(key: key);
-
-  @override
-  State<CTabView> createState() => _CTabViewState();
-}
-
-class _CTabViewState extends State<CTabView> with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    widget.state.activeIndex = widget.initialIndex;
-    widget.state.controller = TabController(
-      vsync: this,
-      length: widget.tabs.length,
-      initialIndex: widget.state.activeIndex,
-    )..addListener(_onTabChange);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Observer(
-      builder: (context) => Column(
-        children: [
-          Center(
-            child: TabBar(
-              controller: widget.state.controller,
-              isScrollable: true,
-              labelColor: Colors.white,
-              unselectedLabelColor: Colors.grey,
-              tabs: [
-                for (var tab in widget.tabs) Tab(text: tab.text),
-              ],
-            ),
-          ),
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    //widget.state.activeIndex++;
-                    //Das muss anderst gehen -> reaction inside state???
-                    //_controller.animateTo(widget.state.activeIndex);
-                  },
-                  child: Text("Next")),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: widget.tabs[widget.state.activeIndex].body,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onTabChange() {
-    widget.state.activeIndex = widget.state.controller.index;
-  }
-}
-
-class CTabItem extends StatelessWidget {
-  String text;
-  Widget body;
-  CTabItem({Key? key, required this.text, required this.body}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Tab(text: text);
   }
 }

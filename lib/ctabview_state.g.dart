@@ -25,35 +25,19 @@ mixin _$CTabViewState on _CTabViewState, Store {
     });
   }
 
-  late final _$isVisibleAtom =
-      Atom(name: '_CTabViewState.isVisible', context: context);
+  late final _$tabsHiddenAtom =
+      Atom(name: '_CTabViewState.tabsHidden', context: context);
 
   @override
-  bool get isVisible {
-    _$isVisibleAtom.reportRead();
-    return super.isVisible;
+  bool get tabsHidden {
+    _$tabsHiddenAtom.reportRead();
+    return super.tabsHidden;
   }
 
   @override
-  set isVisible(bool value) {
-    _$isVisibleAtom.reportWrite(value, super.isVisible, () {
-      super.isVisible = value;
-    });
-  }
-
-  late final _$isEnabledAtom =
-      Atom(name: '_CTabViewState.isEnabled', context: context);
-
-  @override
-  bool get isEnabled {
-    _$isEnabledAtom.reportRead();
-    return super.isEnabled;
-  }
-
-  @override
-  set isEnabled(bool value) {
-    _$isEnabledAtom.reportWrite(value, super.isEnabled, () {
-      super.isEnabled = value;
+  set tabsHidden(bool value) {
+    _$tabsHiddenAtom.reportWrite(value, super.tabsHidden, () {
+      super.tabsHidden = value;
     });
   }
 
@@ -61,8 +45,7 @@ mixin _$CTabViewState on _CTabViewState, Store {
   String toString() {
     return '''
 activeIndex: ${activeIndex},
-isVisible: ${isVisible},
-isEnabled: ${isEnabled}
+tabsHidden: ${tabsHidden}
     ''';
   }
 }
